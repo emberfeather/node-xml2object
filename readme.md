@@ -1,8 +1,8 @@
 # Node.js xml2object
 
-Simple wrapper on the [SAX.js](https://github.com/isaacs/sax-js) parser to parse xml into javascript objects.
+Simple wrapper on the [SAX.js](https://github.com/isaacs/sax-js) parser to stream xml into javascript objects.
 
-Streams an xml file converting xml elements into JavaScript objects.
+Converts xml elements into JavaScript objects.
 
 ## Install
 
