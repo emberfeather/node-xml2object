@@ -2,7 +2,7 @@
 
 Simple wrapper on the [SAX.js](https://github.com/isaacs/sax-js) parser to parse xml into javascript objects.
 
-Converts a streaming xml file into JavaScript objects.
+Streams an xml file converting xml elements into JavaScript objects.
 
 ## Install
 
