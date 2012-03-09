@@ -44,6 +44,9 @@ Constructor for creating an instance of the xml parser
 
 Triggers the xml file to start streaming to the parser. Call this method after you have bound to the events.
 
+    // Start parsing the XML
+    parser.start();
+
 ### Event: 'object'
 
     function(name, obj) { ... }
@@ -55,3 +58,7 @@ Triggered when an object has been parsed from the XML file with the name of the 
     function() { ... }
 
 Marks the end of the input file when it has been completely streamed through the parser.
+
+## Other Notes
+
+Elements being parsed cannot currently be nested. For example. if you have `root > bikes > bike > wheel` as a heirarchy and have done a `xml2object('transportation.xml', [ 'bike', 'wheel' ])` the bike objects will be returned, but the wheel elements inside the bike element will not be parsed separately.
