@@ -85,14 +85,14 @@ Constructor for creating an instance of the xml parser.
 
 The source argument is optional and can be a path to an xml file or an input stream.
 
-If no source is specified you can set a readable Stream to `.inputStream` or pipe a Stream into the `.saxStream`.
+If no source is specified you can set a readable Stream to `.source` or pipe a Stream into the `.saxStream`.
 
     var xml2object = require('xml2object');
     
     // Parse the myAnimals.xml file looking for <animal> elements
     var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
 
-### .inputSource
+### .source
 
 The input Stream used as a source for parsing.
 
