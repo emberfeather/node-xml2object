@@ -10,6 +10,8 @@ Converts xml elements into JavaScript objects.
 
 ## Usage
 
+### From a file
+
     var xml2object = require('xml2object');
     
     // Create a new xml parser with an array of xml elements to look for
@@ -29,16 +31,42 @@ Converts xml elements into JavaScript objects.
     // Start parsing the XML
     parser.start();
 
+### From a stream
+
+    var xml2object = require('xml2object');
+    
+    // Create a new xml parser with an array of xml elements to look for
+    var parser = new xml2object(null, [ 'animal' ]);
+    
+    // Bind to the object event to work with the objects found in the XML file
+    parser.on('object', function(name, obj) {
+        console.log('Found an object: %s', name);
+        console.log(obj);
+    });
+
+    // Bind to the file end event to tell when the file is done being streamed
+    parser.on('end', function(name, obj) {
+        console.log('Finished parsing xml!');
+    });
+
+    request.get('http://www.example.com/test.xml').pipe(parser.saxStream)
+
 ## Module
 
 ### xml2object(xmlFile, elements)
 
-Constructor for creating an instance of the xml parser
+Constructor for creating an instance of the xml parser.
+The xmlFile argument is optional. If not specified you need to pipe your own Stream into the parser.saxStream.
 
     var xml2object = require('xml2object');
     
     // Parse the myAnimals.xml file looking for <animal> elements
     var parser = new xml2object('myAnimals.xml', [ 'animal' ]);
+
+### .saxStream
+
+The underlying saxStream. When not using the xmlFile argument in the constructor this stream can be used as
+a destination for pipe().
 
 ### .start()
 
@@ -46,6 +74,8 @@ Triggers the xml file to start streaming to the parser. Call this method after y
 
     // Start parsing the XML
     parser.start();
+
+
 
 ### Event: 'object'
 
