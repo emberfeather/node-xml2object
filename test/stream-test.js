@@ -48,3 +48,19 @@ exports.testSetter = function(test){
 
 	parser.start();
 };
+
+exports.testSetterUnreadable = function(test){
+	test.expect(1);
+
+	var stream = fs.createReadStream(path.normalize(__dirname + '/fixture/input01.xml'));
+	var parser = new xml2object(['cat']);
+
+	// Make the stream non-readable by destroying
+	stream.destroy();
+
+	test.throws(function() {
+		parser.source = stream;
+	}, Error);
+
+	test.done();
+};
