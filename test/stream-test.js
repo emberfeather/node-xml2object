@@ -25,6 +25,19 @@ exports.testConstructor = function(test){
 	parser.start();
 };
 
+exports.testNoSource = function(test){
+	test.expect(1);
+
+	var parser = new xml2object(['cat']);
+
+	test.throws(function() {
+		// Starting without any source should throw an error
+		parser.start();
+	}, Error);
+
+	test.done();
+};
+
 exports.testSetter = function(test){
 	test.expect(3);
 
