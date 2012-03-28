@@ -79,11 +79,11 @@ _Note:_ The following example uses the [`request`][1] package to simplify the ht
 
 ## Module
 
-### xml2object(elements, source)
+### xml2object(elements[, source])
 
 Constructor for creating an instance of the xml parser.
 
-The source argument is optional and can be a path to an xml file or an input stream.
+The source argument is can be a path to an xml file or an input stream.
 
 If no source is specified you can set a readable Stream to `.source` or pipe a Stream into the `.saxStream`.
 
@@ -94,7 +94,7 @@ If no source is specified you can set a readable Stream to `.source` or pipe a S
 
 ### .source
 
-The input Stream used as a source for parsing.
+The input Stream used as a source for parsing. Can be set to a xml file path or a readable stream.
 
 ### .saxStream
 
