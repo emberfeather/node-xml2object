@@ -34,6 +34,7 @@ Converts xml elements into JavaScript objects.
 ### From a stream
 
     var xml2object = require('xml2object');
+    var request = require('request')
     
     // Create a new xml parser with an array of xml elements to look for
     var parser = new xml2object(null, [ 'animal' ]);
