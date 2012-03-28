@@ -96,6 +96,10 @@ If no source is specified you can set a readable Stream to `.source` or pipe a S
 
 The input Stream used as a source for parsing. Can be set to a xml file path or a readable stream.
 
+    var parser = new xml2object([ 'animal' ]);
+
+    parser.source = 'myAnimals.xml';
+
 ### .saxStream
 
 The underlying sax Stream. Data can be piped directly to the sax Stream using the `pipe()`.
