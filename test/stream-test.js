@@ -1,3 +1,4 @@
+var fs = require('fs');
 var nodeunit = require('nodeunit');
 var path = require('path');
 var xml2object = require('../lib/xml2object');
@@ -5,7 +6,8 @@ var xml2object = require('../lib/xml2object');
 exports.testConstructor = function(test){
 	test.expect(3);
 
-	var parser = new xml2object(['dog'], path.normalize(__dirname + '/fixture/input01.xml'));
+	var stream = fs.createReadStream(path.normalize(__dirname + '/fixture/input01.xml'));
+	var parser = new xml2object(['dog'], stream);
 	var found = [];
 
 	parser.on('object', function(name, obj) {
@@ -26,10 +28,11 @@ exports.testConstructor = function(test){
 exports.testSetter = function(test){
 	test.expect(3);
 
+	var stream = fs.createReadStream(path.normalize(__dirname + '/fixture/input01.xml'));
 	var parser = new xml2object(['cat']);
 	var found = [];
 
-	parser.source = path.normalize(__dirname + '/fixture/input01.xml');
+	parser.source = stream;
 
 	parser.on('object', function(name, obj) {
 		found.push(obj.name);
