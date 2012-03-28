@@ -10,12 +10,12 @@ Converts xml elements into JavaScript objects.
 
 ## Usage
 
-### From a file
+### From A File Name
 
     var xml2object = require('xml2object');
     
     // Create a new xml parser with an array of xml elements to look for
-    var parser = new xml2object('myAnimals.xml', [ 'animal' ]);
+    var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
     
     // Bind to the object event to work with the objects found in the XML file
     parser.on('object', function(name, obj) {
@@ -31,13 +31,13 @@ Converts xml elements into JavaScript objects.
     // Start parsing the XML
     parser.start();
 
-### From a stream
+### From An Input Stream
 
     var xml2object = require('xml2object');
-    var request = require('request');
+    var source = fs.createReadStream('/path/to/file.xml');
     
     // Create a new xml parser with an array of xml elements to look for
-    var parser = new xml2object(null, [ 'animal' ]);
+    var parser = new xml2object([ 'animal' ], source);
     
     // Bind to the object event to work with the objects found in the XML file
     parser.on('object', function(name, obj) {
@@ -50,24 +50,55 @@ Converts xml elements into JavaScript objects.
         console.log('Finished parsing xml!');
     });
 
+    // Start parsing the input stream
+    parser.start();
+
+### Piped From An Input Stream
+
+_Note:_ The following example uses the [`request`][1] package to simplify the http request.
+
+    var xml2object = require('xml2object');
+    var request = require('request');
+    
+    // Create a new xml parser with an array of xml elements to look for
+    var parser = new xml2object([ 'animal' ]);
+    
+    // Bind to the object event to work with the objects found in the XML file
+    parser.on('object', function(name, obj) {
+        console.log('Found an object: %s', name);
+        console.log(obj);
+    });
+
+    // Bind to the file end event to tell when the file is done being streamed
+    parser.on('end', function(name, obj) {
+        console.log('Finished parsing xml!');
+    });
+
+    // Pipe a request into the parser
     request.get('http://www.example.com/test.xml').pipe(parser.saxStream);
 
 ## Module
 
-### xml2object(xmlFile, elements)
+### xml2object(elements, source)
 
 Constructor for creating an instance of the xml parser.
-The xmlFile argument is optional. If not specified you need to pipe your own Stream into the parser.saxStream.
+
+The source argument is optional and can be a path to an xml file or an input stream.
+
+If no source is specified you can set a readable Stream to `.inputStream` or pipe a Stream into the `.saxStream`.
 
     var xml2object = require('xml2object');
     
     // Parse the myAnimals.xml file looking for <animal> elements
-    var parser = new xml2object('myAnimals.xml', [ 'animal' ]);
+    var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
+
+### .inputSource
+
+The input Stream used as a source for parsing.
 
 ### .saxStream
 
-The underlying saxStream. When not using the xmlFile argument in the constructor this stream can be used as
-a destination for pipe().
+The underlying sax Stream. Data can be piped directly to the sax Stream using the `pipe()`.
 
 ### .start()
 
@@ -75,8 +106,6 @@ Triggers the xml file to start streaming to the parser. Call this method after y
 
     // Start parsing the XML
     parser.start();
-
-
 
 ### Event: 'object'
 
@@ -90,6 +119,14 @@ Triggered when an object has been parsed from the XML file with the name of the 
 
 Marks the end of the input file when it has been completely streamed through the parser.
 
+### Event: 'start'
+
+    function() { ... }
+
+Marks the start of reading from the source. This event will not fire if using the `.saxParser.pipe()` method.
+
 ## Other Notes
 
 Elements being parsed cannot currently be nested. For example. if you have `root > bikes > bike > wheel` as a heirarchy and have done a `xml2object('transportation.xml', [ 'bike', 'wheel' ])` the bike objects will be returned, but the wheel elements inside the bike element will not be parsed separately.
+
+  [1]: https://github.com/mikeal/request
