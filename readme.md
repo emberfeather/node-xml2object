@@ -24,7 +24,7 @@ Converts xml elements into JavaScript objects.
     });
 
     // Bind to the file end event to tell when the file is done being streamed
-    parser.on('end', function(name, obj) {
+    parser.on('end', function() {
         console.log('Finished parsing xml!');
     });
     
@@ -46,7 +46,7 @@ Converts xml elements into JavaScript objects.
     });
 
     // Bind to the file end event to tell when the file is done being streamed
-    parser.on('end', function(name, obj) {
+    parser.on('end', function() {
         console.log('Finished parsing xml!');
     });
 
@@ -70,7 +70,7 @@ _Note:_ The following example uses the [`request`][1] package to simplify the ht
     });
 
     // Bind to the file end event to tell when the file is done being streamed
-    parser.on('end', function(name, obj) {
+    parser.on('end', function() {
         console.log('Finished parsing xml!');
     });
 
