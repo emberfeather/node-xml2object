@@ -2,7 +2,7 @@
   "author": "Randy Merrill <Zoramite+node@gmail.com> (http://forthedeveloper.com)",
   "name": "xml2object",
   "description": "Simple XML to JavaScript Object Converter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/emberfeather/node-xml2object",
   "repository": {
     "type": "git",
