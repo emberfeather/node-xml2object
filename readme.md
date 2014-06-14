@@ -77,9 +77,21 @@ _Note:_ The following example uses the [`request`][1] package to simplify the ht
     // Pipe a request into the parser
     request.get('http://www.example.com/test.xml').pipe(parser.saxStream);
 
+
+### Advanced Options
+
+    var xml2object = require('xml2object');
+    
+    // Create a new xml parser with an array of xml elements to look for
+    // but this time we have lower-level requirements
+    var parser = new xml2object([ 'Envelope' ], undefined, { xmlns:true });
+    
+    // everything else the same
+
+
 ## Module
 
-### xml2object(elements[, source])
+### xml2object(elements[, source[, saxOptions]])
 
 Constructor for creating an instance of the xml parser.
 
@@ -91,6 +103,9 @@ If no source is specified you can set a readable Stream to `.source` or pipe a S
     
     // Parse the myAnimals.xml file looking for <animal> elements
     var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
+
+`saxOptions` is passed directly to the [SAX parser](https://github.com/isaacs/sax-js#arguments). Options supported in node-xml2object are
+* xmlns : XML namespaces, ignore namespaces. Helpful if you don't know the namespace(s) but do know the element names (example, some uPnP XML data)
 
 ### .source
 
