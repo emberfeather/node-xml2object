@@ -4,19 +4,21 @@ Simple wrapper on the [SAX.js](https://github.com/isaacs/sax-js) parser to strea
 
 Converts xml elements into JavaScript objects.
 
+[![Build Status](https://drone.io/github.com/emberfeather/node-xml2object/status.png)](https://drone.io/github.com/emberfeather/node-xml2object/latest)
+
 ## Install
 
-    npm install xml2object
+    npm install xml2object --save
 
 ## Usage
 
 ### From A File Name
 
     var xml2object = require('xml2object');
-    
+
     // Create a new xml parser with an array of xml elements to look for
     var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
-    
+
     // Bind to the object event to work with the objects found in the XML file
     parser.on('object', function(name, obj) {
         console.log('Found an object: %s', name);
@@ -27,7 +29,7 @@ Converts xml elements into JavaScript objects.
     parser.on('end', function() {
         console.log('Finished parsing xml!');
     });
-    
+
     // Start parsing the XML
     parser.start();
 
@@ -35,10 +37,10 @@ Converts xml elements into JavaScript objects.
 
     var xml2object = require('xml2object');
     var source = fs.createReadStream('/path/to/file.xml');
-    
+
     // Create a new xml parser with an array of xml elements to look for
     var parser = new xml2object([ 'animal' ], source);
-    
+
     // Bind to the object event to work with the objects found in the XML file
     parser.on('object', function(name, obj) {
         console.log('Found an object: %s', name);
@@ -59,10 +61,10 @@ _Note:_ The following example uses the [`request`][1] package to simplify the ht
 
     var xml2object = require('xml2object');
     var request = require('request');
-    
+
     // Create a new xml parser with an array of xml elements to look for
     var parser = new xml2object([ 'animal' ]);
-    
+
     // Bind to the object event to work with the objects found in the XML file
     parser.on('object', function(name, obj) {
         console.log('Found an object: %s', name);
@@ -81,11 +83,11 @@ _Note:_ The following example uses the [`request`][1] package to simplify the ht
 ### Advanced Options
 
     var xml2object = require('xml2object');
-    
+
     // Create a new xml parser with an array of xml elements to look for
     // but this time we have lower-level requirements
     var parser = new xml2object([ 'Envelope' ], undefined, { xmlns:true });
-    
+
     // everything else the same
 
 
@@ -100,7 +102,7 @@ The source argument is can be a path to an xml file or an input stream.
 If no source is specified you can set a readable Stream to `.source` or pipe a Stream into the `.saxStream`.
 
     var xml2object = require('xml2object');
-    
+
     // Parse the myAnimals.xml file looking for <animal> elements
     var parser = new xml2object([ 'animal' ], 'myAnimals.xml');
 

@@ -1,17 +1,24 @@
-var nodeunit = require('nodeunit');
+var assert = require("assert");
 var path = require('path');
 var xml2object = require('../lib/xml2object');
 
-exports.testError = function(test){
-    test.expect(1);
+describe('Error', function(){
+	it('should have an error when cannot parse', function(done){
+		var parser = new xml2object(
+			['dog'],
+			path.normalize(__dirname + '/fixture/input02_invalid.xml'));
+	    var found = [];
 
-    var parser = new xml2object(['dog'], path.normalize(__dirname + '/fixture/input02.xml'));
-    var found = [];
+	    parser.on('error', function(error) {
+			assert.equal(true, error instanceof Error);
+			found.push(error);
 
-    parser.on('error', function(error) {
-        test.ok(error instanceof Error);
-        test.done();
-    });
+			// Brittle, but the parser gets multiple errors with invalid input.
+			if (found.length == 2) {
+				done();
+			}
+	    });
 
-    parser.start();
-};
+	    parser.start();
+	});
+});

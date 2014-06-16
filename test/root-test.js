@@ -1,23 +1,25 @@
-var nodeunit = require('nodeunit');
+var assert = require("assert");
 var path = require('path');
 var xml2object = require('../lib/xml2object');
 
-exports.testRoot = function(test){
-	test.expect(2);
+describe('Root', function(){
+	it('should match root element', function(done){
+		var parser = new xml2object(
+			['example'],
+			path.normalize(__dirname + '/fixture/input01_simple.xml'));
+		var found = [];
 
-	var parser = new xml2object(['example'], path.normalize(__dirname + '/fixture/input01.xml'));
-	var found = [];
+		parser.on('object', function(name, obj) {
+			found.push(obj.foo);
+		});
 
-	parser.on('object', function(name, obj) {
-		found.push(obj.foo);
+		parser.on('end', function() {
+			assert.equal(1, found.length, 'Should have found two objects');
+			assert.equal('bar', found[0], 'foobar mismatch');
+
+			done();
+		});
+
+		parser.start();
 	});
-
-	parser.on('end', function() {
-		test.equal(found.length, 1, "Should have found two objects");
-		test.equal(found[0], 'bar', 'foobar mismatch');
-
-		test.done();
-	});
-
-	parser.start();
-};
+});
